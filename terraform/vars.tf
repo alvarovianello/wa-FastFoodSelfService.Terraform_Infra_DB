@@ -3,7 +3,7 @@ variable "regionDefault" {
 }
 
 variable "projectName" {
-  default = "EKS-FastFood"
+  default = "eks-fastfood"
 }
 
 variable "labRole" {
