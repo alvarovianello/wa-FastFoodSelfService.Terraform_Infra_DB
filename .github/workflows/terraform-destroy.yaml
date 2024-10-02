@@ -1,0 +1,40 @@
+name: Destroy Infra AWS
+
+on:
+  push:
+    branches:
+      - terraform-destroy
+
+env:
+  REGION_DEFAULT: "us-east-1"
+
+jobs:
+  destroy-infra:
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.REGION_DEFAULT }}
+
+      - name: Terraform Setup 
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        id: init
+        working-directory: terraform
+        run: terraform init -input=false
+
+      - name: Terraform Plan Destroy
+        id: plan
+        working-directory: terraform
+        run: terraform plan -destroy -out=tfplan-destroy -no-color -input=false
+
+      - name: Terraform Apply Destroy
+        working-directory: terraform
+        run: terraform apply -destroy -input=false -auto-approve
