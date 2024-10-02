@@ -28,6 +28,10 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.REGION_DEFAULT }}
 
+      - name: Setup Terraform
+        if: success()
+        uses: hashicorp/setup-terraform@v3
+
       - name: Terraform Format
         id: fmt
         working-directory: terraform
