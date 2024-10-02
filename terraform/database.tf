@@ -1,6 +1,6 @@
 #Subnet group
 resource "aws_db_subnet_group" "food_db_subnet_group" {
-  name       = "${var.projectName}-db-subnet-group"
+  name       = "${var.aws_region}-db-subnet-group"
   subnet_ids = [for subnet in data.aws_subnet.subnet : subnet.id if subnet.availability_zone != "${var.regionDefault}e"] # Excluindo uma AZ específica se necessário
 
   tags = {
