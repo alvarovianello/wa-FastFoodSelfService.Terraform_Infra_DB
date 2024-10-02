@@ -13,7 +13,6 @@ resource "aws_db_instance" "postgres_db" {
   vpc_security_group_ids = [aws_security_group.sg-fastfood-db.id]         # ID do grupo de segurança (alterar para o existente)
   availability_zone      = "${var.regionDefault}a"                        # Zona de disponibilidade
   skip_final_snapshot    = true                                           # Desabilitar snapshots finais
-  prevent_destroy        = false
 
   # Configurações de backup
   backup_retention_period = 0 # Desabilitar backups automatizados
@@ -31,4 +30,7 @@ resource "aws_db_instance" "postgres_db" {
   # Desabilitar escalabilidade automática do armazenamento
   max_allocated_storage = 100 # Escalabilidade automática desativada (limitada ao armazenamento alocado)
 
+  lifecycle {
+    prevent_destroy = false
+  }
 }
