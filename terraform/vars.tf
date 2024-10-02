@@ -7,7 +7,7 @@ variable "projectName" {
 }
 
 variable "db_identifier" {
-  default = "FastFoodDB"
+  default = "fastfooddb"
 }
 
 variable "db_name" {
