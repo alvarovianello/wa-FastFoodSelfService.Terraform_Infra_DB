@@ -10,6 +10,10 @@ variable "db_identifier" {
   default = "FastFoodDB"
 }
 
+variable "db_name" {
+  default = "FastFoodDB"
+}
+
 variable "db_password" {
   default = "FastFoodDB#321"
 }
