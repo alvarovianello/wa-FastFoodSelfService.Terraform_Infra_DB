@@ -5,7 +5,7 @@ resource "aws_db_instance" "postgres_db" {
   engine                 = "postgres"                          # Motor do banco de dados PostgreSQL
   engine_version         = "16.3"                              # Versão PostgreSQL 16.3
   instance_class         = "db.m5d.large"                      # Classe da instância
-  name                   = var.dbName                          # Nome do banco de dados
+  db_name                = var.dbName                          # Nome do banco de dados
   username               = var.dbUser                          # Nome de usuário principal
   password               = var.dbPassword                      # Senha do banco de dados
   publicly_accessible    = true                                # Acesso público (IP público)
