@@ -1,4 +1,4 @@
-variable "regionDefault" {
+variable "aws_region" {
   default = "us-east-1"
 }
 
@@ -6,34 +6,14 @@ variable "projectName" {
   default = "eks-fastfood"
 }
 
-variable "labRole" {
-  default = "arn:aws:iam::659767469388:role/LabRole"
+variable "db_identifier" {
+  default = "FastFoodDB"
 }
 
-variable "accessConfig" {
-  default = "API_AND_CONFIG_MAP"
-}
-
-variable "nodeGrop" {
-  default = "NodeGroupFastFood"
-}
-
-variable "principalArn" {
-  default = "arn:aws:iam::659767469388:role/voclabs"
-}
-
-variable "policyArn" {
-  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-}
-
-variable "dbPassword" {
+variable "db_password" {
   default = "FastFoodDB#321"
 }
 
-variable "dbName" {
-  default = "FastFoodDB#321"
-}
-
-variable "dbUser" {
-  default = "postgres"
+variable "db_username" {
+  default = "root"
 }
