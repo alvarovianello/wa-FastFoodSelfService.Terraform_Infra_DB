@@ -33,6 +33,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Apply
-        if: success()
         working-directory: terraform
+        if: success()
         run: bash terraform.sh apply -auto-approve
