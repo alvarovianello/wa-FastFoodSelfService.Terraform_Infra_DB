@@ -1,5 +1,5 @@
 resource "aws_db_instance" "postgres_db" {
-  allocated_storage      = 20                                             # Armazenamento alocado (100 GiB)
+  allocated_storage      = 100                                            # Armazenamento alocado (100 GiB)
   storage_type           = "io2"                                          # SSD de IOPS provisionadas
   iops                   = 3000                                           # 3000 IOPS provisionadas
   engine                 = "postgres"                                     # Motor do banco de dados PostgreSQL
@@ -13,6 +13,7 @@ resource "aws_db_instance" "postgres_db" {
   vpc_security_group_ids = [aws_security_group.sg-fastfood-db.id]         # ID do grupo de segurança (alterar para o existente)
   availability_zone      = "${var.regionDefault}a"                        # Zona de disponibilidade
   skip_final_snapshot    = true                                           # Desabilitar snapshots finais
+  prevent_destroy        = false
 
   # Configurações de backup
   backup_retention_period = 0 # Desabilitar backups automatizados
@@ -28,9 +29,6 @@ resource "aws_db_instance" "postgres_db" {
   performance_insights_enabled = false # Desativar Performance Insights
 
   # Desabilitar escalabilidade automática do armazenamento
-  max_allocated_storage = 20 # Escalabilidade automática desativada (limitada ao armazenamento alocado)
+  max_allocated_storage = 100 # Escalabilidade automática desativada (limitada ao armazenamento alocado)
 
-  lifecycle {
-    ignore_changes = [password]
-  }
 }
