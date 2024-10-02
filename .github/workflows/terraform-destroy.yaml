@@ -9,7 +9,10 @@ env:
   REGION_DEFAULT: "us-east-1"
 
 jobs:
-  destroy-infra:
+  destroy-infra:  
+    name: terraform
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
