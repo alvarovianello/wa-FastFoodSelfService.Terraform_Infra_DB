@@ -34,4 +34,5 @@ jobs:
 
       - name: Terraform Apply
         if: success()
+        working-directory: terraform
         run: bash terraform.sh apply -auto-approve
