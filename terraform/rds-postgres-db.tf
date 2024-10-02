@@ -9,7 +9,7 @@ resource "aws_db_instance" "postgres_db" {
   username               = var.dbUser                                     # Nome de usuário principal
   password               = var.dbPassword                                 # Senha do banco de dados
   publicly_accessible    = true                                           # Acesso público (IP público)
-  db_subnet_group_name   = aws_db_subnet_group.postgres_subnet_group.name # Grupo de sub-redes (padrão)
+  db_subnet_group_name   = aws_db_subnet_group.postgres-subnet-group.name # Grupo de sub-redes (padrão)
   vpc_security_group_ids = [aws_security_group.sg-fastfood-db.id]         # ID do grupo de segurança (alterar para o existente)
   availability_zone      = "${var.regionDefault}a"                        # Zona de disponibilidade
   skip_final_snapshot    = true                                           # Desabilitar snapshots finais
