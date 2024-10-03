@@ -1,15 +1,7 @@
 name: Create DB MYSQL AWS
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  REGION_DEFAULT: "us-east-1"
+  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
 jobs:
   create-db:
