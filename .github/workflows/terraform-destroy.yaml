@@ -1,46 +1,38 @@
-name: Destroy Database RDS AWS
+name: Destroy DB MYSQL AWS
 
 on:
-  push:
-    branches:
-      - terraform-destroy
-  pull_request:
-    branches:
-      - terraform-destroy
+  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
 env:
   REGION_DEFAULT: "us-east-1"
 
 jobs:
-  destroy-db:  
+  destroy-db:
     name: terraform
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.REGION_DEFAULT }}
 
-      - name: Terraform Setup 
+      - name: Setup Terraform
+        if: success()
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         id: init
-        working-directory: terraform_db_postgres
+        working-directory: terraform
         run: terraform init -input=false
 
-      - name: Terraform Plan Destroy
-        id: plan
-        working-directory: terraform_db_postgres
-        run: terraform plan -destroy -out=tfplan-destroy -no-color -input=false
-
-      - name: Terraform Apply Destroy
-        working-directory: terraform_db_postgres
-        run: terraform apply -destroy -input=false -auto-approve
+      - name: Terraform Destroy
+        id: destroy
+        working-directory: terraform
+        run: terraform destroy -auto-approve -input=false
