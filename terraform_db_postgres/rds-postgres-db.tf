@@ -1,5 +1,5 @@
 resource "aws_db_instance" "postgres_db" {
-  allocated_storage      = 20
+  allocated_storage      = 100
   storage_type           = "io2"
   iops                   = 3000
   engine                 = "postgres"
@@ -29,7 +29,7 @@ resource "aws_db_instance" "postgres_db" {
   performance_insights_enabled = false
 
   # Desabilitar escalabilidade automática do armazenamento
-  max_allocated_storage = 20
+  max_allocated_storage = 100
 
   tags = {
     Name = "postgres_db"
