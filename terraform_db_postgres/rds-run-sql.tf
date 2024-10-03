@@ -3,11 +3,8 @@ resource "null_resource" "run_sql" {
 
   provisioner "local-exec" {
     command = <<EOT
-      PGPASSWORD=${var.dbPassword} psql \
-      -h ${aws_db_instance.postgres_db.endpoint} \
-      -U ${var.dbUser} \
-      -d ${var.dbName} \
-      -f DDL.sql
+      sleep 240  # segundos
+      set PGPASSWORD=${var.dbPassword} && psql -h ${aws_db_instance.postgres_db.endpoint} -p 5432 -U ${var.dbUser} -d ${var.dbName} -f DDL.sql
     EOT
   }
 }
