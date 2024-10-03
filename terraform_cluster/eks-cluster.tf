@@ -13,6 +13,6 @@ resource "aws_eks_cluster" "eks-cluster-fastfood" {
 }
 
 output "cluster_name" {
-  value = aws_eks_cluster.eks-cluster-fastfood.name
+  value       = aws_eks_cluster.eks-cluster-fastfood.name
   description = "The Name of the cluster"
 }
