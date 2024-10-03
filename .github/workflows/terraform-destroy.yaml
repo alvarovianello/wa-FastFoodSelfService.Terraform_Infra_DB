@@ -3,12 +3,6 @@ name: Import AWS Resources and Destroy
 on:
   workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
-env:
-  REGION_DEFAULT: "us-east-1"
-  DB_INSTANCE_IDENTIFIER: "fastfooddb"
-  SECURITY_GROUP_ID: "sg-028620361f60a87dd"
-  SUBNET_GROUP_ID: "us-east-1-db-subnet-group"
-
 jobs:
   import-and-destroy:
     name: Import and Destroy
