@@ -1,16 +1,16 @@
 resource "aws_db_instance" "postgres_db" {
-  allocated_storage      = 100
-  storage_type           = "io2"
-  iops                   = 3000
-  engine                 = "postgres"
-  engine_version         = "16.3"
-  instance_class         = "db.t3.micro"
-  identifier             = var.dbIdentifier
-  db_name                = var.dbName
-  username               = var.dbUser
-  password               = var.dbPassword
-  publicly_accessible    = true  
-  skip_final_snapshot    = true
+  allocated_storage   = 100
+  storage_type        = "io2"
+  iops                = 3000
+  engine              = "postgres"
+  engine_version      = "16.3"
+  instance_class      = "db.t3.micro"
+  identifier          = var.dbIdentifier
+  db_name             = var.dbName
+  username            = var.dbUser
+  password            = var.dbPassword
+  publicly_accessible = true
+  skip_final_snapshot = true
 
   vpc_security_group_ids = [aws_security_group.sg-fastfood-db.id]
   db_subnet_group_name   = aws_db_subnet_group.postgres-subnet-group.name
@@ -37,6 +37,6 @@ resource "aws_db_instance" "postgres_db" {
 }
 
 output "db_instance_identifier" {
-  value = var.dbIdentifier
+  value       = var.dbIdentifier
   description = "The identifier of the RDS instance"
 }
