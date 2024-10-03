@@ -2,7 +2,7 @@ name: Create DB MYSQL AWS
 
 on:
   workflow_dispatch: 
-  
+
 jobs:
   create-db:
     name: terraform

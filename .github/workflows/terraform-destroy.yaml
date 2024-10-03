@@ -8,12 +8,12 @@ env:
   DB_INSTANCE_IDENTIFIER: ${{ vars.DB_INSTANCE_IDENTIFIER }}
   DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
   DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
-  
+
 jobs:
   import-and-destroy-db:
     name: terraform
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
