@@ -5,7 +5,7 @@ resource "aws_db_instance" "postgres_db" {
   engine                 = "postgres"
   engine_version         = "16.3"
   instance_class         = "db.m5d.large"
-  instance_class         = var.aws_db_instance
+  instance               = var.aws_db_instance
   db_name                = var.dbName
   username               = var.dbUser
   password               = var.dbPassword
