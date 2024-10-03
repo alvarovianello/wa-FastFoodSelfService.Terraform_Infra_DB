@@ -1,16 +1,11 @@
 name: Create DB POSTGRES AWS
 
 on:
-  push:
-    branches:
-      - terraform-postgres
-  pull_request:
-    branches:
-      - terraform-postgres
+  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
 env:
-  REGION_DEFAULT: "us-east-1"
-
+  REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
+  
 jobs:
   create-db:
     name: terraform
@@ -57,3 +52,17 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform_db_postgres
         run: terraform apply -input=false -auto-approve
+
+      - name: Get Outputs from Terraform
+        working-directory: terraform
+        id: output
+        run: |
+          echo "::set-output name=db_instance_identifier::$(terraform output -raw db_instance_identifier)"
+          echo "::set-output name=db_security_group_id::$(terraform output -raw db_security_group_id)"
+          echo "::set-output name=db_subnet_group_id::$(terraform output -raw db_subnet_group_id)"
+
+      - name: Update GitHub Env Variables
+        run: |
+          echo "DB_INSTANCE_IDENTIFIER=${{ steps.output.outputs.db_instance_identifier }}" >> $GITHUB_ENV
+          echo "DB_SECURITY_GROUP_ID=${{ steps.output.outputs.db_security_group_id }}" >> $GITHUB_ENV
+          echo "DB_SUBNET_GROUP_ID=${{ steps.output.outputs.db_subnet_group_id }}" >> $GITHUB_ENV

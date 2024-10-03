@@ -1,7 +1,7 @@
 name: Create DB MYSQL AWS
 
 on:
-  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
+  workflow_dispatch: 
 
 jobs:
   create-db:
