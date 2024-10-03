@@ -3,10 +3,10 @@ name: Create Infra AWS
 on:
   push:
     branches:
-      - terraform-destroy
+      - main
   pull_request:
     branches:
-      - terraform-destroy
+      - main
 
 env:
   REGION_DEFAULT: "us-east-1"

@@ -1,7 +1,10 @@
-name: Destroy Infra AWS
+name: Destroy Database RDS AWS
 
 on:
   push:
+    branches:
+      - terraform-destroy
+  pull_request:
     branches:
       - terraform-destroy
 
@@ -9,7 +12,7 @@ env:
   REGION_DEFAULT: "us-east-1"
 
 jobs:
-  destroy-infra:  
+  destroy-db:  
     name: terraform
     runs-on: ubuntu-latest
 
@@ -30,14 +33,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        working-directory: terraform
+        working-directory: terraform_db_postgres
         run: terraform init -input=false
 
       - name: Terraform Plan Destroy
         id: plan
-        working-directory: terraform
+        working-directory: terraform_db_postgres
         run: terraform plan -destroy -out=tfplan-destroy -no-color -input=false
 
       - name: Terraform Apply Destroy
-        working-directory: terraform
+        working-directory: terraform_db_postgres
         run: terraform apply -destroy -input=false -auto-approve
