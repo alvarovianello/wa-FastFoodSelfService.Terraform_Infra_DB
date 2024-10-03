@@ -1,7 +1,7 @@
 name: Import AWS Resources and Destroy DB Postgres AWS
 
 on:
-  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
+  workflow_dispatch:
 
 env:
   REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}

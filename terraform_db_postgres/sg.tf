@@ -28,5 +28,5 @@ resource "aws_security_group" "sg-fastfood-db" {
 
 output "db_security_group_id" {
   value = aws_security_group.sg-fastfood-db.id
-  description = "The ID of the security group"
+  description = "The ID of the security group DB"
 }

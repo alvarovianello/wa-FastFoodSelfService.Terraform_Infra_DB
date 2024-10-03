@@ -1,13 +1,13 @@
-name: Create DB POSTGRES AWS
+name: Create Cluster ESK AWS
 
 on:
-  workflow_dispatch:  # Permite que o destroy seja acionado manualmente
+  workflow_dispatch: 
 
 env:
   REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
 
 jobs:
-  create-db:
+  create-cluster:
     name: terraform
     runs-on: ubuntu-latest
     
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -29,40 +29,40 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         run: terraform fmt -check
         continue-on-error: true
 
       - name: Terraform Init
         id: init
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         run: terraform init -input=false
 
       - name: Terraform Validate
         id: validate
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         run: terraform plan -out=tfplan -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Apply
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         run: terraform apply -input=false -auto-approve
-
+      
       - name: Get Outputs from Terraform
-        working-directory: terraform_db_postgres
+        working-directory: terraform_cluster
         id: output
         run: |
-          echo "db_instance_identifier=$(terraform output -raw db_instance_identifier)" >> $GITHUB_OUTPUT
-          echo "db_security_group_id=$(terraform output -raw db_security_group_id)" >> $GITHUB_OUTPUT
-          echo "db_subnet_group_id=$(terraform output -raw db_subnet_group_id)" >> $GITHUB_OUTPUT
+          echo "cluster_name=$(terraform output -raw cluster_name)" >> $GITHUB_OUTPUT
+          echo "cluster_security_group_id=$(terraform output -raw cluster_security_group_id)" >> $GITHUB_OUTPUT
+          echo "cluster_node_group_id=$(terraform output -raw cluster_node_group_id)" >> $GITHUB_OUTPUT
 
       - name: Update GitHub Env Variables
         run: |
-          echo "DB_INSTANCE_IDENTIFIER=${{ steps.output.outputs.db_instance_identifier }}" >> $GITHUB_ENV
-          echo "DB_SECURITY_GROUP_ID=${{ steps.output.outputs.db_security_group_id }}" >> $GITHUB_ENV
-          echo "DB_SUBNET_GROUP_ID=${{ steps.output.outputs.db_subnet_group_id }}" >> $GITHUB_ENV
+          echo "CLUSTER_NAME=${{ steps.output.outputs.cluster_name }}" >> $GITHUB_ENV
+          echo "CLUSTER_SECURITY_GROUP_ID=${{ steps.output.outputs.cluster_security_group_id }}" >> $GITHUB_ENV
+          echo "CLUSTER_NODE_GROUP_ID=${{ steps.output.outputs.cluster_node_group_id }}" >> $GITHUB_ENV
