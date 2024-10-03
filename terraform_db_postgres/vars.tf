@@ -10,10 +10,6 @@ variable "dbPassword" {
   default = "FastFoodDB#321"
 }
 
-variable "dbIdentifier" {
-  default = "fastfooddb"
-}
-
 variable "dbName" {
   default = "FastFoodDB"
 }
