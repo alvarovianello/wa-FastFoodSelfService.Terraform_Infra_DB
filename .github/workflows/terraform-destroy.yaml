@@ -1,13 +1,16 @@
-name: Destroy DB MYSQL AWS
+name: Import AWS Resources and Destroy DB Postgres AWS
 
 on:
   workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
 env:
-  REGION_DEFAULT: "us-east-1"
-
+  REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
+  DB_INSTANCE_IDENTIFIER: ${{ vars.DB_INSTANCE_IDENTIFIER }}
+  DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
+  DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
+  
 jobs:
-  destroy-db:
+  import-and-destroy-db:
     name: terraform
     runs-on: ubuntu-latest
     
@@ -24,15 +27,29 @@ jobs:
           aws-region: ${{ env.REGION_DEFAULT }}
 
       - name: Setup Terraform
-        if: success()
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         id: init
-        working-directory: terraform
+        working-directory: terraform_db_postgres
         run: terraform init -input=false
 
+      - name: Import RDS Instance DB
+        run: terraform import aws_db_instance.postgres_db ${{ env.DB_INSTANCE_IDENTIFIER }}
+        working-directory: terraform_db_postgres
+
+      - name: Import Security Group DB
+        run: terraform import aws_security_group.sg-fastfood-db ${{ env.DB_SECURITY_GROUP_ID }}
+        working-directory: terraform_db_postgres
+
+      - name: Import Subnet Group DB
+        run: terraform import aws_db_subnet_group.postgres-subnet-group ${{ env.DB_SUBNET_GROUP_ID }}
+        working-directory: terraform_db_postgres
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -no-color -input=false
+        working-directory: terraform_db_postgres
+
       - name: Terraform Destroy
-        id: destroy
-        working-directory: terraform
-        run: terraform destroy -auto-approve -input=false
+        run: terraform destroy -auto-approve
+        working-directory: terraform_db_postgres

@@ -35,3 +35,8 @@ resource "aws_db_instance" "postgres_db" {
     Name = "postgres_db"
   }
 }
+
+output "db_instance_identifier" {
+  value = var.dbIdentifier
+  description = "The identifier of the RDS instance"
+}
