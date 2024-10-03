@@ -1,16 +1,19 @@
-name: Destroy DB MYSQL AWS
+name: Import AWS Resources and Destroy
 
 on:
   workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
 env:
   REGION_DEFAULT: "us-east-1"
+  DB_INSTANCE_IDENTIFIER: "fastfooddb"
+  SECURITY_GROUP_ID: "sg-028620361f60a87dd"
+  SUBNET_GROUP_ID: "us-east-1-db-subnet-group"
 
 jobs:
-  destroy-db:
-    name: terraform
+  import-and-destroy:
+    name: Import and Destroy
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,7 +27,6 @@ jobs:
           aws-region: ${{ env.REGION_DEFAULT }}
 
       - name: Setup Terraform
-        if: success()
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
@@ -32,7 +34,22 @@ jobs:
         working-directory: terraform
         run: terraform init -input=false
 
-      - name: Terraform Destroy
-        id: destroy
+      - name: Import RDS Instance
+        run: terraform import aws_db_instance.food_database ${{ env.DB_INSTANCE_IDENTIFIER }}
         working-directory: terraform
-        run: terraform destroy -auto-approve -input=false
+
+      - name: Import Security Group
+        run: terraform import aws_security_group.food_db_sg ${{ env.SECURITY_GROUP_ID }}
+        working-directory: terraform
+
+      - name: Import Subnet Group
+        run: terraform import aws_db_subnet_group.food_db_subnet_group ${{ env.SUBNET_GROUP_ID }}
+        working-directory: terraform
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -no-color -input=false
+        working-directory: terraform
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        working-directory: terraform
