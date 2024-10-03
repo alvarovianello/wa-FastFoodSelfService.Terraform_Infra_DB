@@ -3,6 +3,12 @@ name: Import AWS Resources and Destroy
 on:
   workflow_dispatch:  # Permite que o destroy seja acionado manualmente
 
+env:
+  REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
+  DB_INSTANCE_IDENTIFIER: ${{ vars.DB_INSTANCE_IDENTIFIER }}
+  DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
+  DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
+
 jobs:
   import-and-destroy:
     name: Import and Destroy
