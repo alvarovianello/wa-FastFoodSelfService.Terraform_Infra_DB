@@ -39,11 +39,11 @@ jobs:
         working-directory: terraform
 
       - name: Import Security Group
-        run: terraform import aws_security_group.food_db_sg ${{ env.SECURITY_GROUP_ID }}
+        run: terraform import aws_security_group.food_db_sg ${{ env.DB_SECURITY_GROUP_ID }}
         working-directory: terraform
 
       - name: Import Subnet Group
-        run: terraform import aws_db_subnet_group.food_db_subnet_group ${{ env.SUBNET_GROUP_ID }}
+        run: terraform import aws_db_subnet_group.food_db_subnet_group ${{ env.DB_SUBNET_GROUP_ID }}
         working-directory: terraform
 
       - name: Terraform Plan
