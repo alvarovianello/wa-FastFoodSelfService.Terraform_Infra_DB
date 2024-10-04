@@ -3,24 +3,24 @@ name: Destroy DB Postgres RDS AWS and Import AWS Resources
 on:
   workflow_dispatch:
 
-environment: production
-
-env:
-  TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
-  TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
-  TF_VAR_dbPassword: ${{ secrets.DB_PASSWORD }}
-  TF_VAR_dbIdentifier: ${{ vars.DB_IDENTIFIER }}
-  TF_VAR_dbName: ${{ vars.DB_NAME }}
-  TF_VAR_dbUser: ${{ vars.DB_USER}}
-  
-  DB_IDENTIFIER: ${{ vars.DB_IDENTIFIER }}
-  DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
-  DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
-
 jobs:
   import-and-destroy-db:
     name: terraform
     runs-on: ubuntu-latest
+
+    environment: production
+
+    env:
+      TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
+      TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
+      TF_VAR_dbPassword: ${{ secrets.DB_PASSWORD }}
+      TF_VAR_dbIdentifier: ${{ vars.DB_IDENTIFIER }}
+      TF_VAR_dbName: ${{ vars.DB_NAME }}
+      TF_VAR_dbUser: ${{ vars.DB_USER}}
+      
+      DB_IDENTIFIER: ${{ vars.DB_IDENTIFIER }}
+      DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
+      DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
 
     steps:
       - name: Checkout code

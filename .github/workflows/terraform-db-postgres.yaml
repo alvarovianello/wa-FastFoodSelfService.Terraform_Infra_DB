@@ -3,20 +3,20 @@ name: Create DB Postgres RDS AWS
 on:
   workflow_dispatch:
 
-environment: production
-
-env:
-  TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
-  TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
-  TF_VAR_dbPassword: ${{ secrets.DB_PASSWORD }}
-  TF_VAR_dbIdentifier: ${{ vars.DB_IDENTIFIER }}
-  TF_VAR_dbName: ${{ vars.DB_NAME }}
-  TF_VAR_dbUser: ${{ vars.DB_USER}}
-
 jobs:
   create-db:
     name: terraform
     runs-on: ubuntu-latest  
+
+    environment: production
+
+    env:
+      TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
+      TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
+      TF_VAR_dbPassword: ${{ secrets.DB_PASSWORD }}
+      TF_VAR_dbIdentifier: ${{ vars.DB_IDENTIFIER }}
+      TF_VAR_dbName: ${{ vars.DB_NAME }}
+      TF_VAR_dbUser: ${{ vars.DB_USER}}
     
     steps:
       - name: Checkout code
