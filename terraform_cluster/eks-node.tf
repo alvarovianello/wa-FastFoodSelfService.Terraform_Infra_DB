@@ -16,6 +16,6 @@ resource "aws_eks_node_group" "eks-node-fastfood" {
 }
 
 output "cluster_node_group_id" {
-  value       = "${var.projectName}#{var.nodeGrop}"
+  value       = "${var.projectName}:{var.nodeGrop}"
   description = "The Id of the node grupe cluster"
 }
