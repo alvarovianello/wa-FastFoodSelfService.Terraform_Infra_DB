@@ -3,8 +3,16 @@ name: Create Cluster ESK AWS
 on:
   workflow_dispatch: 
 
+environment: production
+
 env:
-  REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
+  TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
+  TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
+  TF_VAR_labRole: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/LabRole"
+  TF_VAR_accessConfig: ${{ vars.ACCESS_CONFIG }}
+  TF_VAR_nodeGrop: ${{ vars.NODE_GROUP }}
+  TF_VAR_principalArn: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}/voclabs"
+  TF_VAR_policyArn: ${{ vars.POLICY_ARN}}
 
 jobs:
   create-cluster:
@@ -21,7 +29,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ env.REGION_DEFAULT }}
+          aws-region: ${{ vars.REGION_DEFAULT }}
 
       - name: Setup Terraform
         if: success()
@@ -57,16 +65,8 @@ jobs:
         working-directory: terraform_cluster
         id: output
         run: |
-          echo "cluster_name=$(terraform output -raw cluster_name)" >> $GITHUB_OUTPUT
           echo "cluster_security_group_id=$(terraform output -raw cluster_security_group_id)" >> $GITHUB_OUTPUT
-          echo "cluster_node_group_id=$(terraform output -raw cluster_node_group_id)" >> $GITHUB_OUTPUT
-          echo "cluster_access_policy_id=$(terraform output -raw cluster_access_policy_id)" >> $GITHUB_OUTPUT
-          echo "cluster_access_entry_id=$(terraform output -raw cluster_access_entry_id)" >> $GITHUB_OUTPUT
 
       - name: Update GitHub Env Variables
         run: |
-          echo "CLUSTER_NAME=${{ steps.output.outputs.cluster_name }}" >> $GITHUB_ENV
           echo "CLUSTER_SECURITY_GROUP_ID=${{ steps.output.outputs.cluster_security_group_id }}" >> $GITHUB_ENV
-          echo "CLUSTER_NODE_GROUP_ID=${{ steps.output.outputs.cluster_node_group_id }}" >> $GITHUB_ENV
-          echo "CLUSTER_ACCESS_POLICY_ID=${{ steps.output.outputs.cluster_access_policy_id }}" >> $GITHUB_ENV
-          echo "CLUSTER_ACCESS_ENTRY_ID=${{ steps.output.outputs.cluster_access_entry_id }}" >> $GITHUB_ENV

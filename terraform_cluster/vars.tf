@@ -1,27 +1,27 @@
 variable "regionDefault" {
-  default = "us-east-1"
+  default = ""
 }
 
 variable "projectName" {
-  default = "eks-fastfood"
+  default = ""
 }
 
 variable "labRole" {
-  default = "arn:aws:iam::319407994479:role/LabRole"
+  default = ""
 }
 
 variable "accessConfig" {
-  default = "API_AND_CONFIG_MAP"
+  default = ""
 }
 
 variable "nodeGrop" {
-  default = "NodeGroupFastFood"
+  default = ""
 }
 
 variable "principalArn" {
-  default = "arn:aws:iam::319407994479:role/voclabs"
+  default = ""
 }
 
 variable "policyArn" {
-  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  default = ""
 }

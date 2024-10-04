@@ -1,11 +1,19 @@
-name: Import AWS Resources and Destroy DB Postgres AWS
+name: Destroy DB Postgres RDS AWS and Import AWS Resources
 
 on:
   workflow_dispatch:
 
+environment: production
+
 env:
-  REGION_DEFAULT: ${{ vars.REGION_DEFAULT }}
-  DB_INSTANCE_IDENTIFIER: ${{ vars.DB_INSTANCE_IDENTIFIER }}
+  TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
+  TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
+  TF_VAR_dbPassword: ${{ secrets.DB_PASSWORD }}
+  TF_VAR_dbIdentifier: ${{ vars.DB_IDENTIFIER }}
+  TF_VAR_dbName: ${{ vars.DB_NAME }}
+  TF_VAR_dbUser: ${{ vars.DB_USER}}
+  
+  DB_IDENTIFIER: ${{ vars.DB_IDENTIFIER }}
   DB_SECURITY_GROUP_ID: ${{ vars.DB_SECURITY_GROUP_ID }}
   DB_SUBNET_GROUP_ID: ${{ vars.DB_SUBNET_GROUP_ID }}  
 
@@ -19,12 +27,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ env.REGION_DEFAULT }}
+          aws-region: ${{ vars.REGION_DEFAULT }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -35,7 +43,7 @@ jobs:
         run: terraform init -input=false
 
       - name: Import RDS Instance DB
-        run: terraform import aws_db_instance.postgres_db ${{ env.DB_INSTANCE_IDENTIFIER }}
+        run: terraform import aws_db_instance.postgres_db ${{ env.DB_IDENTIFIER }}
         working-directory: terraform_db_postgres
 
       - name: Import Security Group DB
