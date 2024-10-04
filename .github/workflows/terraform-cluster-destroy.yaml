@@ -9,7 +9,6 @@ env:
   CLUSTER_SECURITY_GROUP_ID: ${{ vars.CLUSTER_SECURITY_GROUP_ID }}
   CLUSTER_NODE_GROUP_ID: ${{ vars.CLUSTER_NODE_GROUP_ID }} 
   CLUSTER_ACCESS_POLICY_ID: ${{ vars.CLUSTER_ACCESS_POLICY_ID }} 
-  CLUSTER_ACCESS_ENTRY_ID: ${{ vars.CLUSTER_ACCESS_ENTRY_ID }} 
 
 jobs:
   import-and-destroy-cluster:
@@ -50,10 +49,6 @@ jobs:
 
       - name: Import Access Policy Cluster
         run: terraform import aws_eks_access_policy_association.eks-access-policy-fastfood ${{ env.CLUSTER_ACCESS_POLICY_ID }}
-        working-directory: terraform_cluster
-
-      - name: Import Access Entry Cluster
-        run: terraform import aws_eks_access_entry.eks-access-entry-fastfood ${{ env.CLUSTER_ACCESS_ENTRY_ID}}#
         working-directory: terraform_cluster
 
       - name: Terraform Plan
