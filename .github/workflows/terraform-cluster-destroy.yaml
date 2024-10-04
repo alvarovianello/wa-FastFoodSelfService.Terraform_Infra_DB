@@ -53,7 +53,7 @@ jobs:
         working-directory: terraform_cluster
 
       - name: Import Access Entry Cluster
-        run: terraform import aws_eks_access_entry.eks-access-entry-fastfood ${{ env.CLUSTER_ACCESS_POLICY_ID}}#
+        run: terraform import aws_eks_access_entry.eks-access-entry-fastfood ${{ env.CLUSTER_ACCESS_ENTRY_ID}}#
         working-directory: terraform_cluster
 
       - name: Terraform Plan
