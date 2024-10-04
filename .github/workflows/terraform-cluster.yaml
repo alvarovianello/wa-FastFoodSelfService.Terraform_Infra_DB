@@ -1,4 +1,4 @@
-name: Create Cluster ESK AWS
+name: Create CLUSTER ESK AWS
 
 on:
   workflow_dispatch: 

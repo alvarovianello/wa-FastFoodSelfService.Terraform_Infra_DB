@@ -64,12 +64,10 @@ jobs:
         working-directory: terraform_db_postgres
         id: output
         run: |
-          echo "db_instance_identifier=$(terraform output -raw db_instance_identifier)" >> $GITHUB_OUTPUT
           echo "db_security_group_id=$(terraform output -raw db_security_group_id)" >> $GITHUB_OUTPUT
           echo "db_subnet_group_id=$(terraform output -raw db_subnet_group_id)" >> $GITHUB_OUTPUT
 
       - name: Update GitHub Env Variables
         run: |
-          echo "DB_INSTANCE_IDENTIFIER=${{ steps.output.outputs.db_instance_identifier }}" >> $GITHUB_ENV
           echo "DB_SECURITY_GROUP_ID=${{ steps.output.outputs.db_security_group_id }}" >> $GITHUB_ENV
           echo "DB_SUBNET_GROUP_ID=${{ steps.output.outputs.db_subnet_group_id }}" >> $GITHUB_ENV
