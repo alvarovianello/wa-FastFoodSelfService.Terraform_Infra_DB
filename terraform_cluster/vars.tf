@@ -7,7 +7,9 @@ variable "projectName" {
 }
 
 variable "labRole" {
-  default = ""
+  description = "ARN da role do Lab"
+  type        = string
+  sensitive   = true
 }
 
 variable "accessConfig" {
@@ -19,7 +21,9 @@ variable "nodeGrop" {
 }
 
 variable "principalArn" {
-  default = ""
+  description = "ARN principal"
+  type        = string
+  sensitive   = true
 }
 
 variable "policyArn" {

@@ -6,10 +6,6 @@ variable "projectName" {
   default = ""
 }
 
-variable "dbPassword" {
-  default = ""
-}
-
 variable "dbIdentifier" {
   default = ""
 }
@@ -20,4 +16,10 @@ variable "dbName" {
 
 variable "dbUser" {
   default = ""
+}
+
+variable "dbPassword" {
+  description = "password DB"
+  type        = string
+  sensitive   = true
 }
