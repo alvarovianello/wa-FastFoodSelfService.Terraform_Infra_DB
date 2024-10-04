@@ -60,9 +60,13 @@ jobs:
           echo "cluster_name=$(terraform output -raw cluster_name)" >> $GITHUB_OUTPUT
           echo "cluster_security_group_id=$(terraform output -raw cluster_security_group_id)" >> $GITHUB_OUTPUT
           echo "cluster_node_group_id=$(terraform output -raw cluster_node_group_id)" >> $GITHUB_OUTPUT
+          echo "cluster_access_policy_id=$(terraform output -raw cluster_access_policy_id)" >> $GITHUB_OUTPUT
+          echo "cluster_access_entry_id=$(terraform output -raw cluster_access_entry_id)" >> $GITHUB_OUTPUT
 
       - name: Update GitHub Env Variables
         run: |
           echo "CLUSTER_NAME=${{ steps.output.outputs.cluster_name }}" >> $GITHUB_ENV
           echo "CLUSTER_SECURITY_GROUP_ID=${{ steps.output.outputs.cluster_security_group_id }}" >> $GITHUB_ENV
           echo "CLUSTER_NODE_GROUP_ID=${{ steps.output.outputs.cluster_node_group_id }}" >> $GITHUB_ENV
+          echo "CLUSTER_ACCESS_POLICY_ID=${{ steps.output.outputs.cluster_access_policy_id }}" >> $GITHUB_ENV
+          echo "CLUSTER_ACCESS_ENTRY_ID=${{ steps.output.outputs.cluster_access_entry_id }}" >> $GITHUB_ENV

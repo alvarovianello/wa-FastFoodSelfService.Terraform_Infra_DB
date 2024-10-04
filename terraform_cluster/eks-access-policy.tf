@@ -7,3 +7,8 @@ resource "aws_eks_access_policy_association" "eks-access-policy-fastfood" {
     type = "cluster"
   }
 }
+
+output "cluster_access_policy_id" {
+  value       = "${var.projectName}#{var.principalArn}#{var.policyArn}"
+  description = "The Access Policy Id"
+}
