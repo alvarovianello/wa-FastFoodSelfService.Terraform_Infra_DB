@@ -11,8 +11,3 @@ resource "aws_eks_cluster" "eks-cluster-fastfood" {
     authentication_mode = var.accessConfig
   }
 }
-
-output "cluster_name" {
-  value       = aws_eks_cluster.eks-cluster-fastfood.name
-  description = "The Name of the cluster"
-}

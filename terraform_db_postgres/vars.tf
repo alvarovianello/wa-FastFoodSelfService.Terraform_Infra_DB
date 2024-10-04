@@ -1,23 +1,23 @@
 variable "regionDefault" {
-  default = "us-east-1"
+  default = ""
 }
 
 variable "projectName" {
-  default = "eks-fastfood"
+  default = ""
 }
 
 variable "dbPassword" {
-  default = "FastFoodDB#321"
+  default = ""
 }
 
 variable "dbIdentifier" {
-  default = "fastfooddb"
+  default = ""
 }
 
 variable "dbName" {
-  default = "FastFoodDB"
+  default = ""
 }
 
 variable "dbUser" {
-  default = "postgres"
+  default = ""
 }
