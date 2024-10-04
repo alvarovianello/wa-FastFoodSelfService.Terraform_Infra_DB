@@ -16,6 +16,6 @@ resource "aws_eks_node_group" "eks-node-fastfood" {
 }
 
 output "cluster_node_group_id" {
-  value = aws_eks_node_group.eks-node-fastfood.id
+  value       = aws_eks_node_group.eks-node-fastfood.id
   description = "The Id of the node grupe cluster"
 }
