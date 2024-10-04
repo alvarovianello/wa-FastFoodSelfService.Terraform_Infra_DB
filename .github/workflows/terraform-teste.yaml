@@ -29,12 +29,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.REGION_DEFAULT }}
-
       - name: Debug Secrets
-        run: echo "AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}"
+        run: echo "AWS_ACCOUNT_ID:" + ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Debug PrincipalArn
-        run: echo "TF_VAR_principalArn: ${{ env.TF_VAR_principalArn }}"
+        run: echo "TF_VAR_principalArn:" +${{ env.TF_VAR_principalArn }}
 
       - name: Debug labRole
-        run: echo "TF_VAR_labRole: ${{ env.TF_VAR_labRole }}"
+        run: echo "TF_VAR_labRole:" +${{ env.TF_VAR_labRole }}
