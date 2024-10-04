@@ -3,26 +3,28 @@ name: Destroy CLUSTER EKS AWS and Import AWS Resources
 on:
   workflow_dispatch:
 
-environment: production
 
-env:
-  TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
-  TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
-  TF_VAR_labRole: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/LabRole"
-  TF_VAR_accessConfig: ${{ vars.ACCESS_CONFIG }}
-  TF_VAR_nodeGrop: ${{ vars.NODE_GROUP }}
-  TF_VAR_principalArn: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}/voclabs"
-  TF_VAR_policyArn: ${{ vars.POLICY_ARN }}
-
-  CLUSTER_ACCESS_POLICY_ID: "${{ vars.PROJECT_NAME }}#${{ env.TF_VAR_principalArn }}#${{ vars.POLICY_ARN }}"
-  CLUSTER_SECURITY_GROUP_ID: ${{ vars.CLUSTER_SECURITY_GROUP_ID }}
-  CLUSTER_NODE_GROUP_ID: "${{ vars.PROJECT_NAME }}:${{ vars.NODE_GROUP }}"
-  CLUSTER_NAME: ${{ vars.PROJECT_NAME }}
 
 jobs:
   import-and-destroy-cluster:
     name: terraform
     runs-on: ubuntu-latest
+
+    environment: production
+
+    env:
+      TF_VAR_regionDefault: ${{ vars.REGION_DEFAULT }}
+      TF_VAR_projectName: ${{ vars.PROJECT_NAME }}
+      TF_VAR_labRole: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/LabRole"
+      TF_VAR_accessConfig: ${{ vars.ACCESS_CONFIG }}
+      TF_VAR_nodeGrop: ${{ vars.NODE_GROUP }}
+      TF_VAR_principalArn: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}/voclabs"
+      TF_VAR_policyArn: ${{ vars.POLICY_ARN }}
+
+      CLUSTER_ACCESS_POLICY_ID: "${{ vars.PROJECT_NAME }}#${{ env.TF_VAR_principalArn }}#${{ vars.POLICY_ARN }}"
+      CLUSTER_SECURITY_GROUP_ID: ${{ vars.CLUSTER_SECURITY_GROUP_ID }}
+      CLUSTER_NODE_GROUP_ID: "${{ vars.PROJECT_NAME }}:${{ vars.NODE_GROUP }}"
+      CLUSTER_NAME: ${{ vars.PROJECT_NAME }}
 
     steps:
       - name: Checkout code
